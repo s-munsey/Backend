@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
-import { NextFunction, Response } from "express";
-import { IGetUserAuthInfoRequest } from "./requestDefinitions";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 
 export const createJWT = (user: User) => {
   const token = jwt.sign(
@@ -11,11 +11,7 @@ export const createJWT = (user: User) => {
   return token;
 };
 
-export const auth = (
-  req: IGetUserAuthInfoRequest,
-  res: Response,
-  next: NextFunction
-) => {
+export const auth = (req: Request, res: Response, next: NextFunction) => {
   const bearer = req.headers.authorization;
 
   if (!bearer) {
@@ -44,4 +40,12 @@ export const auth = (
     res.send("Not authorized");
     return;
   }
+};
+
+export const comparePasswords = (password: string, hash: string) => {
+  return bcrypt.compare(password, hash);
+};
+
+export const hashPassword = (password: string) => {
+  return bcrypt.hash(password, 5);
 };

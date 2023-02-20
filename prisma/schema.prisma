@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String     @id @default(uuid()) @map("_id") @db.ObjectId
+  id           String     @id @default(uuid())
   createdAt    DateTime   @default(now())
   username     String     @unique
   emailAddress String
@@ -26,7 +26,7 @@ enum READING_STATUS {
 }
 
 model Book {
-  id           String      @id @default(uuid()) @map("_id") @db.ObjectId
+  id           String      @id @default(uuid())
   isbn         String
   title        String
   author       String
@@ -37,10 +37,10 @@ model Book {
 }
 
 model BookShelf {
-  id            String         @id @default(uuid()) @map("_id") @db.ObjectId
-  userId        String         @unique @db.ObjectId
+  id            String         @id @default(uuid())
+  userId        String         @unique
   user          User           @relation(fields: [userId], references: [id])
-  bookId        String         @db.ObjectId
+  bookId        String
   book          Book           @relation(fields: [bookId], references: [id])
   readingStatus READING_STATUS @default(TO_READ)
 }

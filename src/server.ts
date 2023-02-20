@@ -5,6 +5,7 @@ import morgan from "morgan";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import { auth } from "./modules/auth";
+import { createNewUser, signin } from "./handlers/user";
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/", auth, router);
+
+app.post("/user", createNewUser);
+app.post("/signin", signin);
 
 app.get("/", (req: Request, res: Response) => {
   // sending back an HTML file that a browser can render on the screen.

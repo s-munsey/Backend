@@ -12,23 +12,31 @@ router.get("/books", (req: Request, res: Response) => {
 
 router.get("/books/:id", (req: Request, res: Response) => {});
 
-router.post("/books", body("title"), (req: Request, res: Response) => {
-  const errors = validationResult(req);
+router.post(
+  "/books",
+  body("title").isAlphanumeric(),
+  (req: Request, res: Response) => {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    res.status(400);
-    res.json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      res.status(400);
+      res.json({ errors: errors.array() });
+    }
   }
-});
+);
 
-router.put("/books/:id", body("title"), (req: Request, res: Response) => {
-  const errors = validationResult(req);
+router.put(
+  "/books/:id",
+  body("title").isAlphanumeric(),
+  (req: Request, res: Response) => {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    res.status(400);
-    res.json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      res.status(400);
+      res.json({ errors: errors.array() });
+    }
   }
-});
+);
 
 router.delete("/books/:id", (req: Request, res: Response) => {});
 

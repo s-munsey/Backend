@@ -5,22 +5,20 @@ import { handleInputErrors } from "./modules/middleware";
 const router = Router();
 
 /**
- * Book // may move get all outside as it doesn't need auth
+ * Get all books on user's bookshelf
  */
 router.get("/books", (req: Request, res: Response) => {
   res.json({ message: "book" });
 });
 
+/**
+ * Get a specific book from a user's bookshelf
+ */
 router.get("/books/:id", (req: Request, res: Response) => {});
 
-router.get("/bookshelf", (req: Request, res: Response) => {
-  res.json({ message: "book" });
-});
-
-router.put("/bookshelf", handleInputErrors, (req: Request, res: Response) => {
-  res.json({ message: "book" });
-});
-
+/**
+ * add a book/books to a user's bookshelf
+ */
 router.post(
   "/books",
   body("title").isAlphanumeric(),
@@ -29,6 +27,9 @@ router.post(
   (req: Request, res: Response) => {}
 );
 
+/**
+ * Update a book on a user's bookshelf (ie set to 'finished')
+ */
 router.put(
   "/books/:id",
   body("title").isAlphanumeric(),
@@ -38,6 +39,9 @@ router.put(
   (req: Request, res: Response) => {}
 );
 
+/**
+ * Remove from a user's bookshelf
+ */
 router.delete("/books/:id", (req: Request, res: Response) => {});
 
 export default router;

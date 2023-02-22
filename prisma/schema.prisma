@@ -43,4 +43,6 @@ model BookShelf {
   readingStatus READING_STATUS @default(TO_READ)
   startedDate   DateTime?
   finishedDate  DateTime?
+
+  @@index(fields: [userId])
 }

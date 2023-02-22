@@ -1,5 +1,12 @@
 import { Request, Response, Router } from "express";
 import { body, validationResult } from "express-validator";
+import {
+  addBooks,
+  deleteBookById,
+  getBookById,
+  getBooks,
+  updateBookById,
+} from "./handlers/bookshelf";
 import { handleInputErrors } from "./modules/middleware";
 
 const router = Router();
@@ -7,24 +14,22 @@ const router = Router();
 /**
  * Get all books on user's bookshelf
  */
-router.get("/books", (req: Request, res: Response) => {
-  res.json({ message: "book" });
-});
+router.get("/books", getBooks);
 
 /**
  * Get a specific book from a user's bookshelf
  */
-router.get("/books/:id", (req: Request, res: Response) => {});
+router.get("/books/:id", getBookById);
 
 /**
  * add a book/books to a user's bookshelf
  */
 router.post(
   "/books",
-  body("title").isAlphanumeric(),
+  body("title").isString(),
   body("author").isString(),
   handleInputErrors,
-  (req: Request, res: Response) => {}
+  addBooks
 );
 
 /**
@@ -32,16 +37,16 @@ router.post(
  */
 router.put(
   "/books/:id",
-  body("title").isAlphanumeric(),
+  body("title").isString(),
   body("author").isString(),
   body("readingStatus").isIn(["TO_READ", "READING", "FINISHED"]),
   handleInputErrors,
-  (req: Request, res: Response) => {}
+  updateBookById
 );
 
 /**
  * Remove from a user's bookshelf
  */
-router.delete("/books/:id", (req: Request, res: Response) => {});
+router.delete("/books/:id", deleteBookById);
 
 export default router;

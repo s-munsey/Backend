@@ -16,7 +16,7 @@ model User {
   username     String     @unique
   emailAddress String
   password     String
-  bookShelf    BookShelf?
+  bookShelf    BookShelf[]
 }
 
 enum READING_STATUS {
@@ -27,22 +27,22 @@ enum READING_STATUS {
 
 model Book {
   id        String      @id @default(uuid())
-  isbn      String
+  isbn      String?
   title     String
   author    String
-  coverUri  String
+  coverUri  String?
   BookShelf BookShelf[]
 }
 
 model BookShelf {
   id            String         @id @default(uuid())
-  userId        String         @unique
+  userId        String         
   user          User           @relation(fields: [userId], references: [id])
   bookId        String
   book          Book           @relation(fields: [bookId], references: [id])
   readingStatus READING_STATUS @default(TO_READ)
-  startedDate   DateTime?
-  finishedDate  DateTime?
+  startedDate   DateTime       @default(now()) @db.Timestamptz(6)
+  finishedDate  DateTime?      @db.Timestamptz(6)
 
-  @@index(fields: [userId])
+  @@index([userId, bookId])
 }

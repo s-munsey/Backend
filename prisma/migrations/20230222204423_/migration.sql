@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Book" ALTER COLUMN "isbn" DROP NOT NULL,
+ALTER COLUMN "coverUri" DROP NOT NULL;

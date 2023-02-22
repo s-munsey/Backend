@@ -13,6 +13,14 @@ router.get("/books", (req: Request, res: Response) => {
 
 router.get("/books/:id", (req: Request, res: Response) => {});
 
+router.get("/bookshelf", (req: Request, res: Response) => {
+  res.json({ message: "book" });
+});
+
+router.put("/bookshelf", handleInputErrors, (req: Request, res: Response) => {
+  res.json({ message: "book" });
+});
+
 router.post(
   "/books",
   body("title").isAlphanumeric(),
@@ -25,6 +33,7 @@ router.put(
   "/books/:id",
   body("title").isAlphanumeric(),
   body("author").isString(),
+  body("readingStatus").isIn(["TO_READ", "READING", "FINISHED"]),
   handleInputErrors,
   (req: Request, res: Response) => {}
 );

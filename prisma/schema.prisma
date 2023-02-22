@@ -26,14 +26,12 @@ enum READING_STATUS {
 }
 
 model Book {
-  id           String      @id @default(uuid())
-  isbn         String
-  title        String
-  author       String
-  coverUri     String
-  startedDate  DateTime?
-  finishedDate DateTime?
-  BookShelf    BookShelf[]
+  id        String      @id @default(uuid())
+  isbn      String
+  title     String
+  author    String
+  coverUri  String
+  BookShelf BookShelf[]
 }
 
 model BookShelf {
@@ -43,4 +41,6 @@ model BookShelf {
   bookId        String
   book          Book           @relation(fields: [bookId], references: [id])
   readingStatus READING_STATUS @default(TO_READ)
+  startedDate   DateTime?
+  finishedDate  DateTime?
 }
